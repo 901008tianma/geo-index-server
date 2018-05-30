@@ -6,6 +6,7 @@
 // #include <unordered_map>
 
 #include <h3/h3api.h>
+#include <chrono>
 
 #include "geo-index.h"
 

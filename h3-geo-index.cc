@@ -14,7 +14,7 @@ void H3GeoIndex::AddPoint(const GeoPoint &point) {
   int idIndex = m_stringTable.size();
   m_stringTable.push_back(point.id);
 
-  H3Index index = geoToH3(&coord, 10);
+  H3Index index = geoToH3(&coord, 8);
   //m_map.insert(make_pair(index, idIndex));
 }
 

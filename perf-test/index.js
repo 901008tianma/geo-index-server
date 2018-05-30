@@ -10,7 +10,7 @@ const LOCATION_SHANGHAI = {
 };
 const POINT_COUNT = 10000;
 const SCALE = 2 * 1000;
-const ADDRESS = 'http://localhost:8000/GeoIndex/';
+const ADDRESS = 'http://localhost:8081/GeoIndex/';
 
 function generateLocation(center, scale) {
   const id = uuid();
@@ -136,6 +136,7 @@ function performanceTests({ center, scales, totalCounts, queryCounts, queryCount
   })).then(() => results);
 }
 
+/*
 performanceTests({
   center: LOCATION_SHANGHAI,
   scales: [2000, 10000, 50000],
@@ -144,17 +145,12 @@ performanceTests({
   queryCount: 1000,
   types: ['s2', 'redis'],
 }).then(JSON.stringify).then(console.log);
-
-/*
-Promise
-  .map(['redis', 's2'], type => createIndex({ points, type }))
-  .spread(({ id: idRedis }, { id: idS2 }) => consistencyTest({
-    points,
-    idRedis,
-    idS2,
-    target: generateLocation(LOCATION_SHANGHAI, SCALE),
-    count: 10,
-    radius: SCALE * 0.707,
-  }));
 */
+
+const points = createRandomPoints({ center: LOCATION_SHANGHAI, scale: 50000, count: 100000 });
+createIndex({ type: 'h3', points })
+  .tap(console.log)
+  .then(deleteIndex)
+  .tap(console.log);
+
 
